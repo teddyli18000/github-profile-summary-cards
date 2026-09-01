@@ -28,6 +28,11 @@ describe('parseExcludeLanguages', () => {
         expect(parseExcludeLanguages('js,golang')).toEqual(['javascript', 'go']);
     });
 
+    it('resolves aliases regardless of input casing', () => {
+        expect(parseExcludeLanguages('JS,GOLANG')).toEqual(['javascript', 'go']);
+        expect(parseExcludeLanguages('Js,GoLang')).toEqual(['javascript', 'go']);
+    });
+
     it('returns an empty list for empty input', () => {
         expect(parseExcludeLanguages('')).toEqual([]);
         expect(parseExcludeLanguages(' , ')).toEqual([]);
