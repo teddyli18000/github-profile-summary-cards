@@ -7,6 +7,13 @@ describe('translateLanguage', () => {
         expect(translateLanguage('html')).toBe('HTML');
     });
 
+    it('translates aliases regardless of input casing', () => {
+        expect(translateLanguage('JS')).toBe('JavaScript');
+        expect(translateLanguage('GoLang')).toBe('Go');
+        expect(translateLanguage('CABAL')).toBe('Cabal Config');
+        expect(translateLanguage('AUTOIT3')).toBe('AutoIt');
+    });
+
     it('capitalizes unknown languages', () => {
         expect(translateLanguage('java')).toBe('Java');
         expect(translateLanguage('HTML')).toBe('HTML');
@@ -29,8 +36,18 @@ describe('parseExcludeLanguages', () => {
     });
 
     it('resolves aliases regardless of input casing', () => {
-        expect(parseExcludeLanguages('JS,GOLANG')).toEqual(['javascript', 'go']);
-        expect(parseExcludeLanguages('Js,GoLang')).toEqual(['javascript', 'go']);
+        expect(parseExcludeLanguages('JS,GOLANG,CABAL,AUTOIT3')).toEqual([
+            'javascript',
+            'go',
+            'cabal config',
+            'autoit'
+        ]);
+        expect(parseExcludeLanguages('Js,GoLang,Cabal,AutoIt3')).toEqual([
+            'javascript',
+            'go',
+            'cabal config',
+            'autoit'
+        ]);
     });
 
     it('returns an empty list for empty input', () => {
