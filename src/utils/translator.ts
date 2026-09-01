@@ -269,6 +269,10 @@ export const translateLanguage = function async(lang: string) {
     if (dict[lang] !== undefined) {
         return dict[lang];
     }
+    const caseInsensitiveAlias = Object.keys(dict).find(alias => alias.toLowerCase() === lang.toLowerCase());
+    if (caseInsensitiveAlias !== undefined) {
+        return dict[caseInsensitiveAlias];
+    }
     return lang.charAt(0).toUpperCase() + lang.slice(1);
 };
 
