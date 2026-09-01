@@ -14,6 +14,11 @@ describe('translateLanguage', () => {
         expect(translateLanguage('AUTOIT3')).toBe('AutoIt');
     });
 
+    it('does not treat Object.prototype properties as aliases', () => {
+        expect(translateLanguage('toString')).toBe('ToString');
+        expect(translateLanguage('constructor')).toBe('Constructor');
+    });
+
     it('capitalizes unknown languages', () => {
         expect(translateLanguage('java')).toBe('Java');
         expect(translateLanguage('HTML')).toBe('HTML');
@@ -48,6 +53,10 @@ describe('parseExcludeLanguages', () => {
             'cabal config',
             'autoit'
         ]);
+    });
+
+    it('handles Object.prototype property names as normal languages', () => {
+        expect(parseExcludeLanguages('toString,constructor')).toEqual(['tostring', 'constructor']);
     });
 
     it('returns an empty list for empty input', () => {
